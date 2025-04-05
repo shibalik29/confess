@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sounds pvt.ltd</title>
+    <titl>hello ji</titl>
+    <style>
+        @keyframes movingStripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 200px; }
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #0a0a0a;
+            color: white;
+            background: linear-gradient(45deg, rgba(255, 105, 180, 0.3), rgba(30, 144, 255, 0.3));
+            background-size: 200px 200px;
+            animation: movingStripes 10s linear infinite;
+        }
+        .hidden { display: none; }
+        .login-container {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.8);
+            display: inline-block;
+            margin-top: 100px;
+            text-align: center;
+            width: 350px;
+            position: relative;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: #1e1e1e;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(255, 20, 147, 0.5);
+        }
+        button {
+            background: #ff69b4;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.7);
+            margin-left: 10px;
+        }
+        button:hover {
+            background: #ff1493;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 1);
+        }
+        .flipbook {
+            width: 350px;
+            height: 250px;
+            margin: 20px auto;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 20px pink;
+            position: relative;
+            overflow: hidden;
+        }
+        .flipbook img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .flipbook img.active { opacity: 1; }
+        .moving-no {
+            position: absolute;
+        }
+    </style>
+</head>
+<body><center>
+    <audio id="bg-music" src="Dylan Schneider - Wannabe (Official Audio).mp3" loop></audio>
+    
+    <div id="login-page">
+        <div class="login-container">
+            <h2>welcome</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="checkLogin()">Login</button>
+        </div>
+    </div>
+    
+    <div id="flipbook-page" class="hidden">
+        <h2>Our Memories</h2>
+        <div class="flipbook">
+            <img src="IMG-20250401-WA0018.jpg" class="active">
+            <img src="IMG-20250401-WA0057.jpg">
+            <img src="IMG-20250403-WA0015.jpg">
+            <img src="IMG-20250401-WA0155.jpg">
+            <img src="IMG-20250403-WA0014.jpg">
+            <img src="WhatsApp Image 2025-04-05 at 17.24.42_bbb02d7c.jpg">
+        </div>
+        <h3>I Love You my puchku🥺<br>Will you be my girlfriend?🫴</h3>
+        <button onclick="goToPage('final-page')">Yes</button>
+        <button onclick="goToPage('second-chance-page')">No</button>
+    </div>
+    
+    <div id="second-chance-page" class="hidden">
+        <h2>Here's another chance!</h2>
+        <p>You can't escape this time 😜</p>
+        <button onclick="goToPage('final-page')">Yes</button>
+        <button id="moving-no" class="moving-no" onmouseover="moveNoButton()">No</button>
+    </div>
+    
+    <div id="final-page" class="hidden">
+        <h2>💕 Yay! 💕</h2>
+        <h3>You make me the happiest person! With you it litrally feels that the time flies...<br>I can't express how much important you are for me.After so long of running and searching I finally found the person whom I was looking for🥹...<br>I promise to always be with you, cherish you, and make every moment special for us. 💖</h3>
+    </div>
+
+    <script>
+        let images = document.querySelectorAll('.flipbook img');
+        let currentIndex = 0;
+        function changeImage() {
+            images.forEach(img => img.classList.remove('active'));
+            images[currentIndex].classList.add('active');
+        }
+        function autoChangeImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            changeImage();
+        }
+        setInterval(autoChangeImage, 2000);
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            changeImage();
+        }
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            changeImage();}
+
+        function checkLogin() {
+            let user = document.getElementById('username').value;
+            let pass = document.getElementById('password').value;
+            if (user === "puchku" && pass === "wannabe") {
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('flipbook-page').classList.remove('hidden');
+                document.getElementById('bg-music').play();
+            } else {
+                alert("Incorrect Username or Password");
+            }
+        }
+        function goToPage(pageId) {
+            document.querySelectorAll("div").forEach(div => div.classList.add("hidden"));
+            document.getElementById(pageId).classList.remove("hidden");
+        }
+        function moveNoButton() {
+            let button = document.getElementById('moving-no');
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 50);
+            button.style.position = "absolute";
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+    </script></center>
+</body>
+</html>
